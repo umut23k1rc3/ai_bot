@@ -1,0 +1,4 @@
+0 yeni mayonez
+1 son kullanma tarihine yaklaşmışş mayonez
+2 son kullanma tarihi az geçmişmayonez
+3 son kullanma tarihi çok geçmiş mayonez
