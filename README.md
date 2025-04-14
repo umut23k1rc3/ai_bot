@@ -1,9 +1,6 @@
 # ai_bot
 # 🥫 Yapay Zeka Mayonez Son Kullanma Tarihi Öğrenme ve Yanıtlama READ:ME 🥫
 
-## Merhaba! 👋
-
-Bu READ.ME dosyası, yapay zekanın görseller aracılığıyla mayonezlerin son kullanma tarihlerini nasıl öğrenebileceği ve bu konuda nasıl yanıtlar verebileceği ile ilgili temel bilgileri içermektedir. Amaç, bu konuyu eğlenceli ve anlaşılır bir şekilde sunmaktır. 😊
 
 ## Projenin Amacı 🎯
 
