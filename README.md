@@ -1,61 +1,65 @@
 # ai_bot
-<div>Teachable Machine Image Model</div>
-<button type="button" onclick="init()">Start</button>
-<div id="webcam-container"></div>
-<div id="label-container"></div>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
-<script type="text/javascript">
-    // More API functions here:
-    // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+# 🥫 Yapay Zeka Mayonez Son Kullanma Tarihi Öğrenme ve Yanıtlama READ:ME 🥫
 
-    // the link to your model provided by Teachable Machine export panel
-    const URL = "./my_model/";
+## Merhaba! 👋
 
-    let model, webcam, labelContainer, maxPredictions;
+Bu READ.ME dosyası, yapay zekanın görseller aracılığıyla mayonezlerin son kullanma tarihlerini nasıl öğrenebileceği ve bu konuda nasıl yanıtlar verebileceği ile ilgili temel bilgileri içermektedir. Amaç, bu konuyu eğlenceli ve anlaşılır bir şekilde sunmaktır. 😊
 
-    // Load the image model and setup the webcam
-    async function init() {
-        const modelURL = URL + "model.json";
-        const metadataURL = URL + "metadata.json";
+## Projenin Amacı 🎯
 
-        // load the model and metadata
-        // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
-        // or files from your local hard drive
-        // Note: the pose library adds "tmImage" object to your window (window.tmImage)
-        model = await tmImage.load(modelURL, metadataURL);
-        maxPredictions = model.getTotalClasses();
+Bu projenin temel amacı, bir yapay zeka modeline çeşitli mayonez ambalajlarının görsellerini göstererek, üzerlerindeki son kullanma tarihlerini doğru bir şekilde okuma ve anlama yeteneği kazandırmaktır. Böylece kullanıcılar, bir mayonez görseli yükleyerek son kullanma tarihi hakkında hızlı ve doğru bilgi alabilirler. 🧐
 
-        // Convenience function to setup a webcam
-        const flip = true; // whether to flip the webcam
-        webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
-        await webcam.setup(); // request access to the webcam
-        await webcam.play();
-        window.requestAnimationFrame(loop);
+## Yapay Zeka Nasıl Öğrenecek? 🧠
 
-        // append elements to the DOM
-        document.getElementById("webcam-container").appendChild(webcam.canvas);
-        labelContainer = document.getElementById("label-container");
-        for (let i = 0; i < maxPredictions; i++) { // and class labels
-            labelContainer.appendChild(document.createElement("div"));
-        }
-    }
+Yapay zekanın bu görevi yerine getirebilmesi için aşağıdaki adımlar izlenebilir:
 
-    async function loop() {
-        webcam.update(); // update the webcam frame
-        await predict();
-        window.requestAnimationFrame(loop);
-    }
+1.  **Veri Toplama ve Etiketleme:**
+    * Çok sayıda farklı mayonez markasına ait ambalaj görselleri toplanır. 📸
+    * Bu görseller üzerinde son kullanma tarihlerinin bulunduğu bölgeler manuel olarak işaretlenir (etiketlenir). ✍️
+    * Her bir işaretlenmiş bölgedeki son kullanma tarihi bilgisi metin olarak kaydedilir. 🗓️
 
-    // run the webcam image through the image model
-    async function predict() {
-        // predict can take in an image, video or canvas html element
-        const prediction = await model.predict(webcam.canvas);
-        for (let i = 0; i < maxPredictions; i++) {
-            const classPrediction =
-                prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-            labelContainer.childNodes[i].innerHTML = classPrediction;
-        }
-    }
-</script>
+2.  **Model Seçimi:**
+    * Görsel tanıma ve metin okuma (OCR - Optical Character Recognition) yeteneklerine sahip uygun bir yapay zeka modeli seçilir. Örneğin:
+        * Derin öğrenme modelleri (CNN'ler - Convolutional Neural Networks) görsel özellikleri çıkarmak için.
+        * Tekrarlayan sinir ağları (RNN'ler) veya Transformer modelleri metin tanıma için.
 
+3.  **Model Eğitimi:**
+    * Toplanan ve etiketlenen görseller, seçilen yapay zeka modelini eğitmek için kullanılır. 💪
+    * Model, görsellerdeki desenleri ve bu desenlerin karşılık geldiği son kullanma tarihlerini öğrenir.
+    * Eğitim sürecinde modelin doğruluğu sürekli olarak kontrol edilir ve iyileştirmeler yapılır. 📈
+
+4.  **Model Değerlendirmesi:**
+    * Eğitilmiş model, daha önce görmediği yeni mayonez görselleri üzerinde test edilir. 🧪
+    * Modelin son kullanma tarihlerini ne kadar doğru bir şekilde okuyabildiği ve yanıtlayabildiği değerlendirilir.
+    * Gerekirse modelin performansı artırmak için ek eğitim veya ayarlamalar yapılabilir.
+
+## Kullanıcı Nasıl Etkileşim Kuracak? 🗣️
+
+Kullanıcılar, eğitilmiş yapay zeka ile aşağıdaki şekillerde etkileşim kurabilir:
+
+1.  **Görsel Yükleme:** Kullanıcı, son kullanma tarihini öğrenmek istediği mayonezin fotoğrafını sisteme yükler. 📤
+2.  **Yapay Zeka Analizi:** Yapay zeka modeli, yüklenen görseli analiz eder ve son kullanma tarihinin bulunduğu bölgeyi tespit etmeye çalışır. 👀
+3.  **Metin Tanıma (OCR):** Tespit edilen bölgedeki metin, OCR teknolojisi kullanılarak okunur. 👓
+4.  **Yanıt Oluşturma:** Yapay zeka, okunan metni anlamlandırır ve kullanıcıya son kullanma tarihi hakkında bir yanıt verir. Örneğin:
+    * "Bu mayonezin son kullanma tarihi: 2025-12-31" ✅
+    * "Üzgünüm, son kullanma tarihini net bir şekilde okuyamadım. Lütfen daha net bir fotoğraf yükleyin." 😥
+    * "Dikkat! Bu mayonezin son kullanma tarihi geçmiş!" 🚨
+
+## Olası Zorluklar 🤔
+
+Bu projede karşılaşılabilecek bazı zorluklar şunlardır:
+
+* **Farklı Ambalaj Tasarımları:** Mayonez markalarının ve ürün çeşitlerinin çok farklı ambalaj tasarımları olabilir. Bu, modelin farklı formatlardaki tarihleri tanımasını zorlaştırabilir. 😵‍💫
+* **Değişken Yazı Tipleri ve Boyutları:** Son kullanma tarihleri farklı yazı tiplerinde ve boyutlarında yazılabilir. Bu da OCR işlemini zorlaştırabilir. 😥
+* **Görsel Kalitesi:** Kullanıcının yüklediği fotoğrafın kalitesi düşük olabilir, bu da metin okuma doğruluğunu etkileyebilir.  blurry 📸
+* **Işıklandırma ve Açılar:** Fotoğrafın çekildiği açı ve ışıklandırma, metinlerin okunabilirliğini etkileyebilir. 💡
+* **Dil Farklılıkları:** Farklı ülkelerdeki mayonezlerde son kullanma tarihleri farklı formatlarda ve dillerde yazılabilir. 🌍
+
+## Gelecek Adımlar ve İyileştirmeler ✨
+
+* Daha fazla veri toplanarak modelin farklı ambalaj ve tarih formatlarını daha iyi öğrenmesi sağlanabilir. 📚
+* Görüntü ön işleme teknikleri (netleştirme, kontrast ayarlama vb.) kullanılarak OCR doğruluğu artırılabilir. ⚙️
+* Kullanıcıya daha interaktif bir deneyim sunmak için farklı geri bildirim mekanizmaları (örneğin, son kullanma tarihinin görsel üzerinde işaretlenmesi) eklenebilir. 🖍️
+* Modelin farklı dillerdeki son kullanma tarihlerini tanıyabilmesi için çalışmalar yapılabilir. 🌐
+
+Umarım bu READ.ME dosyası, yapay zekanın mayonezlerin son kullanma tarihlerini öğrenme ve yanıtlama konusundaki potansiyelini anlamanıza yardımcı olmuştur! 😊 Afiyet olsun! 😋
